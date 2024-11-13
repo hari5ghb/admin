@@ -58,7 +58,8 @@
 
         /* Form Styles */
         form {
-            width: 250px;
+            width: 100%;
+            max-width: 300px;
             padding: 40px;
             border: #ffffff 2px solid;
             display: flex;
@@ -81,7 +82,7 @@
         }
         input {
             width: 100%;
-            padding: 5px;
+            padding: 10px;
             margin-bottom: 10px;
             border: #ccc 1px solid;
             border-radius: 5px;
@@ -98,6 +99,19 @@
         }
         button:hover {
             background-color: #555;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            form {
+                padding: 30px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            input, button {
+                padding: 12px;
+            }
         }
     </style>
 </head>
