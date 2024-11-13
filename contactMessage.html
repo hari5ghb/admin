@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin: 0;
+        }
+
+        .contact-list {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item p {
+            margin: 8px 0;
+        }
+
+        .contact-item p strong {
+            color: #333;
+        }
+
+        .no-data {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Contact Messages</h1>
+    <div id="contact-list" class="contact-list"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://localhost:3000/contact-messages')
+                .then(response => response.json())
+                .then(data => {
+                    const contactList = document.getElementById('contact-list');
+                    if (data.length === 0) {
+                        contactList.innerHTML = '<p class="no-data">No contact messages found.</p>';
+                    } else {
+                        data.forEach(contact => {
+                            const contactItem = document.createElement('div');
+                            contactItem.classList.add('contact-item');
+                            contactItem.innerHTML = `
+                                <p><strong>Name:</strong> ${contact.name}</p>
+                                <p><strong>Email:</strong> ${contact.email}</p>
+                                <p><strong>Message:</strong> ${contact.message}</p>
+                                <p><strong>Received At:</strong> ${new Date(contact.createdAt).toLocaleString()}</p>
+                            `;
+                            contactList.appendChild(contactItem);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching contact messages:', error);
+                    document.getElementById('contact-list').innerHTML = '<p class="no-data">Error fetching contact messages.</p>';
+                });
+        });
+    </script>
+</body>
+</html>
